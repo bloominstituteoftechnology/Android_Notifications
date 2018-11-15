@@ -42,7 +42,9 @@ public class MainActivity extends AppCompatActivity {
                         .setPriority(NotificationManager.IMPORTANCE_HIGH)
                         .setContentTitle(channelID)
                         .setContentText("The button was pressed")
-                        .setSmallIcon(R.drawable.ic_launcher_background);
+                        .setSmallIcon(R.drawable.ic_launcher_background)
+                        .setColor(context.getResources().getColor(R.color.colorPrimaryDark))
+                        .setDefaults(Notification.DEFAULT_ALL);
 
                 notificationManager.notify(1, builder.build());
 
