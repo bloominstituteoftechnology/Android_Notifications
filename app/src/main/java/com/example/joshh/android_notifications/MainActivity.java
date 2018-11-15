@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button getNotificationButton;
     private PendingIntent pendingIntent;
+    private PendingIntent actionPendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(context, FullscreenActivity.class);
                 intent.putExtra("notification", "Notification Tapped");
                 pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+                intent.putExtra("notification", "Tapped Action Button");
+                actionPendingIntent = PendingIntent.getActivity(context, 1, intent, PendingIntent.FLAG_ONE_SHOT);
 
                 String channelId = getPackageName() + getString(R.string.channel_id_suffix);
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
@@ -57,7 +60,9 @@ public class MainActivity extends AppCompatActivity {
                         .setContentText("This notification was created by a button")
                         .setColor(getResources().getColor(R.color.colorAccent))
                         .setDefaults(NotificationCompat.DEFAULT_VIBRATE)
-                        .setContentIntent(pendingIntent);
+                        .setContentIntent(pendingIntent)
+                        .setAutoCancel(true)
+                        .addAction(R.drawable.ic_launcher_foreground, "Launch", actionPendingIntent);
                 notificationManager.notify(NOTIFICATION_ID_INSTANT, builder.build());
             }
         });
