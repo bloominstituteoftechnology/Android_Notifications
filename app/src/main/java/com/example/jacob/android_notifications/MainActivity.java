@@ -13,7 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
-    public static final int NOTIFICATION_ID_INSTANT = 354;
+    private static final int NOTIFICATION_ID_INSTANT = 354;
     NotificationManager notificationManager;
     Context context;
     int notificationImportance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -42,27 +42,23 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(Constants.NOTIFICATION_KEY,"Notification Tapped");
                 PendingIntent notifyPendingIntent = PendingIntent.getActivity(context,0,intent,PendingIntent.FLAG_ONE_SHOT);
 
+                Intent intent2 = new Intent(context, FullscreenActivity.class);
+                intent2.putExtra(Constants.NOTIFICATION_KEY,"2nd option selected");
+                PendingIntent notifyPendingIntent2 = PendingIntent.getActivity(context,63,intent2,PendingIntent.FLAG_ONE_SHOT);
+
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
                         .setPriority(notificationImportance)
                         .setContentTitle("Button")
                         .setContentText("The button was pressed")
                         .setColor(context.getColor(R.color.colorPrimary))
                         .addAction(R.drawable.ic_launcher_foreground,"Go to full screen",notifyPendingIntent)
+                        .addAction(R.drawable.ic_launcher_background,"Option 2",notifyPendingIntent2)
                         .setAutoCancel(true)
                         .setSmallIcon(android.R.drawable.ic_dialog_alert)
                         .setDefaults(Notification.DEFAULT_ALL);
                 notificationManager.notify(NOTIFICATION_ID_INSTANT, builder.build());
-
-
-
-
-
-
-
             }
         });
 
     }
-
-
 }
