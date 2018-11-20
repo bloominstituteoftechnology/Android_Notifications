@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Android_Notifications</string>
+    <string name="button_notify_text">Notify!</string>
 </resources>
