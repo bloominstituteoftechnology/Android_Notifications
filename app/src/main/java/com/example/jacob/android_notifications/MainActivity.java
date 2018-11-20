@@ -3,7 +3,9 @@ package com.example.jacob.android_notifications;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
-    public static final int BUTTON_NOTIFICATION_ID = 354;
+    public static final int NOTIFICATION_ID_INSTANT = 354;
     NotificationManager notificationManager;
     Context context;
     int notificationImportance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -36,14 +38,27 @@ public class MainActivity extends AppCompatActivity {
                     notificationManager.createNotificationChannel(channel);
                 }
 
+                Intent intent = new Intent(context, FullscreenActivity.class);
+                intent.putExtra(Constants.NOTIFICATION_KEY,"Notification Tapped");
+                PendingIntent notifyPendingIntent = PendingIntent.getActivity(context,0,intent,PendingIntent.FLAG_ONE_SHOT);
+
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
                         .setPriority(notificationImportance)
                         .setContentTitle("Button")
                         .setContentText("The button was pressed")
                         .setColor(context.getColor(R.color.colorPrimary))
+                        .addAction(R.drawable.ic_launcher_foreground,"Go to full screen",notifyPendingIntent)
+                        .setAutoCancel(true)
                         .setSmallIcon(android.R.drawable.ic_dialog_alert)
                         .setDefaults(Notification.DEFAULT_ALL);
-                notificationManager.notify(BUTTON_NOTIFICATION_ID, builder.build());
+                notificationManager.notify(NOTIFICATION_ID_INSTANT, builder.build());
+
+
+
+
+
+
+
             }
         });
 
