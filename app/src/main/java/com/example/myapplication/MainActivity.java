@@ -1,13 +1,60 @@
 package com.example.myapplication;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.os.Build;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
+    Context context;
+    NotificationManager notificationManager;
+    Button notification_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        context = this;
+
+
+        notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        notification_button = findViewById(R.id.notification_btn);
+        notification_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String channelid = getPackageName() + ".button";
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    CharSequence name           = getString(R.string.notification_name);
+                    String description          = getString(R.string.notification_desc);
+                    int importance              = NotificationManager.IMPORTANCE_HIGH;
+                    NotificationChannel channel = new NotificationChannel(channelid, name, importance);
+                    channel.setDescription(description);
+                    notificationManager.createNotificationChannel(channel);
+
+                }
+
+
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(v.getContext(), channelid)
+                        .setPriority(NotificationManager.IMPORTANCE_DEFAULT)//importance only affects versions 24 -> 26
+                        .setContentTitle(getString(R.string.notification_button_title))
+                        .setContentText(getString(R.string.notification_button_message))
+                        .setColor(context.getResources().getColor(R.color.colorPrimary))  //icon color in notificaton bar
+                        .setSmallIcon(android.R.drawable.ic_dialog_alert);
+
+                notificationManager.notify(1, builder.build());   //extract notificatonID (1) as a constant (usually in a constant class)
+
+                //extract all strings as string resources
+            }
+        });
+
+
     }
 }
+

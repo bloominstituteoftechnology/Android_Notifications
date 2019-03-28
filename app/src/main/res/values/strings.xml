@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="notification_desc">Notifications Triggered By Our Button</string>
+    <string name="notification_name">Channel Name</string>
+    <string name="notification_button_title">Button</string>
+    <string name="notification_button_message">The Button Was Pressed</string>
 </resources>
