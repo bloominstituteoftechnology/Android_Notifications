@@ -1,3 +1,5 @@
+Spencer Stock
+
 # Android Notifications
 
 ## Introduction
