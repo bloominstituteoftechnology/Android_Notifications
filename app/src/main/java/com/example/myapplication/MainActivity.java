@@ -45,7 +45,20 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(context, FullscreenActivity.class);
                 intent.putExtra(getString(R.string.notification_fullscreen_key),"Notification Tapped");
 
-                PendingIntent contentIntent = PendingIntent.getActivity(context, Constants.PENDING_INTENT_REQUEST_CODE,intent,PendingIntent.FLAG_ONE_SHOT);
+                PendingIntent contentIntent = PendingIntent.getActivity(
+                        context,
+                        Constants.PENDING_INTENT_REQUEST_CODE,
+                        intent,
+                        PendingIntent.FLAG_ONE_SHOT);
+
+                Intent actionIntent = new Intent(context, FullscreenActivity.class);
+                actionIntent.putExtra(getString(R.string.notification_fullscreen_key), "Action Intent Notification");
+
+                PendingIntent pendingActionIntent = PendingIntent.getActivity(
+                        context,
+                        Constants.PENDING_ACTION_INTENT_REQUEST_CODE,
+                        actionIntent,
+                        PendingIntent.FLAG_ONE_SHOT);
 
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelid)
                         .setPriority(NotificationManager.IMPORTANCE_DEFAULT)//importance only affects versions 24 -> 26
@@ -53,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
                         .setContentText(getString(R.string.notification_button_message))
                         .setColor(context.getResources().getColor(R.color.colorPrimary))
                         .setContentIntent(contentIntent)//icon color in notification bar
+                        .addAction(R.drawable.ic_music_note_black_24dp, "Action Title",pendingActionIntent)
                         .setSmallIcon(android.R.drawable.ic_dialog_alert);
 
 
