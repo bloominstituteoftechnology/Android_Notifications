@@ -1,8 +1,11 @@
 package com.lambdaschool.android_notifications;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
@@ -11,6 +14,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import static android.app.PendingIntent.getActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -18,22 +23,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final NotificationManager notifMgr=(NotificationManager)this.getSystemService(Context.NOTIFICATION_SERVICE);
+        final NotificationManager notifMgr = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        Button buttonGetNotif=findViewById(R.id.button_get_notification);
+        Button buttonGetNotif = findViewById(R.id.button_get_notification);
         buttonGetNotif.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.O) {
-                    NotificationChannel notifChannel = new NotificationChannel(getPackageName()+ ".testing","Basil's Channel", NotificationManager.IMPORTANCE_DEFAULT);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    Intent intent = new Intent(v.getContext(), FullscreenActivity.class);
+                    intent.putExtra("notification", "This is a test of Basil's craftiness!");
+                    PendingIntent pendingIntent = PendingIntent.getActivity(v.getContext(), 0, intent, PendingIntent.FLAG_ONE_SHOT);
+
+                    NotificationChannel notifChannel = new NotificationChannel(getPackageName() + ".testing", "Basil's Channel", NotificationManager.IMPORTANCE_DEFAULT);
                     notifChannel.setDescription("This is a temporary channel for conducting tests");
                     notifMgr.createNotificationChannel(notifChannel);
-                    NotificationCompat.Builder notifCompatBuilder=new NotificationCompat.Builder(v.getContext(), getPackageName()+".testing");
+                    NotificationCompat.Builder notifCompatBuilder = new NotificationCompat.Builder(v.getContext(), getPackageName() + ".testing");
                     notifCompatBuilder.setPriority(NotificationManager.IMPORTANCE_DEFAULT);
+                    notifCompatBuilder.setContentIntent(pendingIntent);
                     notifCompatBuilder.setContentTitle("Basil's Channel");
                     notifCompatBuilder.setContentText("Pay attention to the various elements in play.");
                     notifCompatBuilder.setSmallIcon(R.drawable.ic_wb_cloudy_black_24dp);
                     notifCompatBuilder.setColor(Color.BLUE);
+                    notifCompatBuilder.setDefaults(Notification.DEFAULT_SOUND);
                     notifMgr.notify(7896575, notifCompatBuilder.build());
                 }
             }
