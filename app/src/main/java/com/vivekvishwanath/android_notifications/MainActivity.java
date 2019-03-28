@@ -61,10 +61,12 @@ public class MainActivity extends AppCompatActivity {
                         setPriority(NotificationManager.IMPORTANCE_HIGH).
                         setContentTitle("Test Notification")
                         .setContentText("This is a test notification")
-                        .setSmallIcon(R.drawable.ic_launcher_foreground)
+                        .setAutoCancel(true)
+                        .setColorized(true)
+                        .setSmallIcon(R.drawable.ic_announcement_black_24dp)
                         .setColor(getResources().getColor(android.R.color.holo_blue_dark))
                         .setDefaults(Notification.DEFAULT_ALL)
-                        .addAction(R.drawable.ic_archive_black_24dp, "Action Test", actionPendingIntent)
+                        .addAction(R.drawable.ic_announcement_black_24dp, "Action Test", actionPendingIntent)
                         .setContentIntent(pendingLaunchFullscreenIntent);
 
                 notificationManager.notify(MainActivity.TEXT_NOTIFICATION_ID, builder.build());
