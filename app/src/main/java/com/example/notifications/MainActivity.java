@@ -97,23 +97,26 @@ public class MainActivity extends AppCompatActivity {
         NotificationManager mNotificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        Intent notificationIntent = new Intent(getApplicationContext(), StringDisplay.class);
-        notificationIntent.putExtra("STRING", "Keep calm and Code on");
+        Intent intent = new Intent(getApplicationContext(), StringDisplay.class);
+        intent.putExtra("STRING", "String to be Opened in second Activity");
 
 
 
 
-        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent contentIntent = PendingIntent.getActivity(getApplicationContext(), requestID,notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), requestID, intent, PendingIntent.FLAG_ONE_SHOT);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_lightbulb_outline_blue_24dp)
                 .setContentTitle("Simple Notification")
                 .setContentText(notificationMessage)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
+
         createNotificationChannel();
-        mBuilder.setContentIntent(contentIntent);
+        //mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
 
     }
