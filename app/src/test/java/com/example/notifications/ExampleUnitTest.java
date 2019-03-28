@@ -1,4 +1,4 @@
-package com.example.android_notifications;
+package com.example.notifications;
 
 import org.junit.Test;
 
