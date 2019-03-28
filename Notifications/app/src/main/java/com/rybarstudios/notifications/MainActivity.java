@@ -45,12 +45,12 @@ public class MainActivity extends AppCompatActivity {
 
                     notificationManager.createNotificationChannel(notificationChannel);
 
-                    Intent intent = new Intent(getApplicationContext(), FullscreenActivity.class);
-                    intent.putExtra(Intent.EXTRA_TEXT, R.string.notification_tapped);
+                    Intent actionIntent = new Intent(getApplicationContext(), FullscreenActivity.class);
+                    actionIntent.putExtra(Intent.EXTRA_TEXT, "Will this work?");
                     PendingIntent pendingIntentNotification = PendingIntent.getActivity(
                             getApplicationContext(),
                             NOTIFICATION_REQUEST_CODE,
-                            intent,
+                            actionIntent,
                             PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT);
 
 
