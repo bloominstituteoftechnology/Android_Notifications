@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Android_Notifications</string>
+    <string name="button_send_notification">Send Notification</string>
+    <string name="button_send_notification_with_intent">Send Notification with intent</string>
 </resources>
