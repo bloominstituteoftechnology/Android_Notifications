@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     CharSequence name           = getString(R.string.notification_name);
                     String description          = getString(R.string.notification_desc);
-                    int importance              = NotificationManager.IMPORTANCE_HIGH;
+                    int importance              = NotificationManager.IMPORTANCE_LOW;
                     NotificationChannel channel = new NotificationChannel(channelid, name, importance);
                     channel.setDescription(description);
                     notificationManager.createNotificationChannel(channel);
@@ -48,9 +48,10 @@ public class MainActivity extends AppCompatActivity {
                         .setColor(context.getResources().getColor(R.color.colorPrimary))  //icon color in notificaton bar
                         .setSmallIcon(android.R.drawable.ic_dialog_alert);
 
-                notificationManager.notify(1, builder.build());   //extract notificatonID (1) as a constant (usually in a constant class)
-
+                notificationManager.notify(Constants.NOTIFY_ID, builder.build());
+                //extract notificatonID (1) as a constant (usually in a constant class)
                 //extract all strings as string resources
+
             }
         });
 
