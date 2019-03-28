@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -16,14 +18,14 @@ import static java.lang.Package.getPackage;
 public class MainActivity extends AppCompatActivity {
 
     public static final int NOTIFICATION_ID_INSTANT = 777;
-    Context context;
+    public static final int NOTIFICATION_REQUEST_CODE = 0;
+
     static String channelId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        context = this;
 
         channelId = getPackageName() + ".reminder";
 
@@ -31,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                final NotificationManager notificationManager =
-                        (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                        (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
 
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     CharSequence name = "This is a test notification";
@@ -43,17 +45,25 @@ public class MainActivity extends AppCompatActivity {
 
                     notificationManager.createNotificationChannel(notificationChannel);
 
+                    Intent intent = new Intent(getApplicationContext(), FullscreenActivity.class);
+                    intent.putExtra(Intent.EXTRA_TEXT, R.string.notification_tapped);
+                    PendingIntent pendingIntentNotification = PendingIntent.getActivity(
+                            getApplicationContext(),
+                            NOTIFICATION_REQUEST_CODE,
+                            intent,
+                            PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT);
 
-                    NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
+
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), channelId)
                             .setPriority(NotificationManager.IMPORTANCE_LOW)
                             .setContentTitle(name)
                             .setContentText(description)
                             .setSmallIcon(R.drawable.ic_android_green_24dp)
                             .setColor(getColor(android.R.color.holo_green_light))
-                            .setDefaults(Notification.DEFAULT_ALL);
+                            .setDefaults(Notification.DEFAULT_ALL)
+                            .setContentIntent(pendingIntentNotification);
 
                     notificationManager.notify(NOTIFICATION_ID_INSTANT, builder.build());
-
                 }
             }
         });
