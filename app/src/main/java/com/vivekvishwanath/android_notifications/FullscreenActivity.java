@@ -77,5 +77,6 @@ public class FullscreenActivity extends AppCompatActivity {
         String notificationText = intent.getStringExtra(MainActivity.NOTIFICATION_TEXT_KEY);
         mContentView.setText(notificationText);
 
+
     }
 }
