@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     CharSequence name           = getString(R.string.notification_name);
                     String description          = getString(R.string.notification_desc);
-                    int importance              = NotificationManager.IMPORTANCE_LOW;
+                    int importance              = NotificationManager.IMPORTANCE_HIGH;
                     NotificationChannel channel = new NotificationChannel(channelid, name, importance);
                     channel.setDescription(description);
                     notificationManager.createNotificationChannel(channel);
