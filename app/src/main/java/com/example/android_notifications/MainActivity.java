@@ -22,40 +22,50 @@ public class MainActivity extends AppCompatActivity {
         final String CHANNEL_ID = getPackageName() + ".reminder";
         final Context context = this;
         Button notificationButton = findViewById(R.id.notification_button);
-        final NotificationManager notificationManager =(NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        final NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
 
         notificationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent goToFullScreen = new Intent(context,FullscreenActivity.class);
-                goToFullScreen.putExtra(FullscreenActivity.FULL_SCREEN_STRING_1,"Notification Tapped");
-                PendingIntent pendingIntent = PendingIntent.getActivity(context,0,goToFullScreen,PendingIntent.FLAG_ONE_SHOT);
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
-                    NotificationChannel notificationChannel = new NotificationChannel(
-                            CHANNEL_ID,
-                            Constants.notificationName,
-                            NotificationManager.IMPORTANCE_DEFAULT);
+                                                  @Override
+                                                  public void onClick(View v) {
+                                                      if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
+                                                          NotificationChannel notificationChannel = new NotificationChannel(
+                                                                  CHANNEL_ID,
+                                                                  Constants.notificationName,
+                                                                  NotificationManager.IMPORTANCE_DEFAULT);
+                                                          //Building the channel
+                                                          notificationChannel.setDescription(Constants.NOTIFICATION_DESCRIPTION);
+                                                          notificationManager.createNotificationChannel(notificationChannel);
 
-                    notificationChannel.setDescription(Constants.NOTIFICATION_DESCRIPTION);
-                    notificationManager.createNotificationChannel(notificationChannel);
-                    NotificationCompat.Builder builder =
-                            new NotificationCompat.Builder(context, CHANNEL_ID)
-                                    .setPriority(NotificationManager.IMPORTANCE_DEFAULT)
-                                    .setContentTitle(Constants.CONTENT_TITLE)
-                                    .setSmallIcon(Constants.CONTENT_ICON)
-                                    .setAutoCancel(true)
-                                    .setContentIntent(pendingIntent);
-
-                    notificationManager.notify(REMINDER_NOTIFICATION_ID, builder.build());
-                }
+                                                          //Building the builder
+                                                          NotificationCompat.Builder builder =
+                                                                  new NotificationCompat.Builder(context, CHANNEL_ID)
+                                                                          .setPriority(NotificationManager.IMPORTANCE_DEFAULT)
+                                                                          .setContentTitle(Constants.CONTENT_TITLE)
+                                                                          .setSmallIcon(Constants.CONTENT_ICON)
+                                                                          .setAutoCancel(true);
 
 
+                                                          //first pending intent
+                                                          Intent goToFullScreen = new Intent(context, FullscreenActivity.class);
+                                                          goToFullScreen.putExtra(FullscreenActivity.FULL_SCREEN_STRING_1, "Notification Tapped");
+                                                          PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, goToFullScreen, PendingIntent.FLAG_ONE_SHOT);
+                                                          builder.setContentIntent(pendingIntent);
 
 
-            }
+                                                          //second pending intent
+                                                          Intent secondIntent = new Intent(context, FullscreenActivity.class);
+                                                          secondIntent.putExtra(FullscreenActivity.FULL_SCREEN_STRING_1, "Action Button Pushed");
+                                                          PendingIntent pendingIntent2 = PendingIntent.getActivity(context, 1, secondIntent, PendingIntent.FLAG_ONE_SHOT);
+                                                          builder.addAction(R.drawable.ic_beenhere_black_24dp, "ActionButton", pendingIntent2);
 
 
-        });
+                                                          notificationManager.notify(REMINDER_NOTIFICATION_ID, builder.build());
+                                                      }
+
+
+                                                  }
+                                              }
+        );
     }
 }
