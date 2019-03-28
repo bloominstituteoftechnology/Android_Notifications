@@ -8,4 +8,6 @@
     <string name="title_activity_fullscreen">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="notification_key">notification_key</string>
+    <string name="notification_fullscreen_key">fullscreen_key</string>
 </resources>
