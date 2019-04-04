@@ -72,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
                                    101,
 
                                    inputIntent,
-
-                                   PendingIntent.FLAG_UPDATE_CURRENT
+                                   PendingIntent.FLAG_ONE_SHOT
+                                   //PendingIntent.FLAG_UPDATE_CURRENT
 
                            );
 
@@ -111,23 +111,7 @@ public class MainActivity extends AppCompatActivity {
                            , builder.build());
 
 
- /*                   NotificationChannel channel=new NotificationChannel(channelId, name, importance);
-                    channel.setDescription( "test" );
-                    NotificationManager notificationManager=(NotificationManager)
-                            getSystemService(NOTIFICATION_SERVICE);
-                    notificationManager.createNotificationChannel(channel);
-        //            Intent intent = new Intent(getApplicationContext(), NotificationDetailsActivity.class);
-          //          PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-                    NotificationCompat.Builder ncb=new NotificationCompat.Builder(
 
-                            context, "test")
-
-                            .setSmallIcon(android.R.drawable.ic_menu_save)
-
-                            .setContentText("New Entry Created");
-
-                    notificationManager.notify(1,ncb.build());
-*/
 
                 }
             }
