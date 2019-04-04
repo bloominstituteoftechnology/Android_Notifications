@@ -12,6 +12,7 @@ import android.support.v4.app.RemoteInput;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
     Context context;
@@ -20,102 +21,114 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_main );
-        context=getApplicationContext();
-        context.getSystemService(Context.NOTIFICATION_SERVICE);
+        context = getApplicationContext();
+        context.getSystemService( Context.NOTIFICATION_SERVICE );
         findViewById( R.id.button_get_notification ).setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String channelId = "CHANNEL_ID";
                 String name = "CHANNEL_NAME";
+                Button bt=findViewById( R.id.button_get_notification );
+                bt.setText( "pressed" );
                 int importance = NotificationManager.IMPORTANCE_HIGH;
 
 
-               if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
-                   NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    NotificationManager notificationManager = (NotificationManager) getSystemService( Context.NOTIFICATION_SERVICE );
 
-                   if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-
-
-
-                       String description = "Notification for journal entry";
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
 
+                        String description = "Notification for journal entry";
 
 
+                        NotificationChannel notificationChannel = new NotificationChannel( channelId, name, importance );
 
-                       NotificationChannel notificationChannel = new NotificationChannel(channelId, name, importance);
+                        notificationChannel.setDescription( description );
 
-                       notificationChannel.setDescription(description);
+                        notificationManager.createNotificationChannel( notificationChannel );
 
-                       notificationManager.createNotificationChannel(notificationChannel);
+                        NotificationCompat.Builder sucessNotification = new NotificationCompat.Builder(
 
-                   }
-
-
-
-                   android.support.v4.app.RemoteInput remoteInput = new RemoteInput.Builder("NEW_ENTRY_ACTION")
-
-                           .setLabel("Enter your entry text")
-
-                           .build();
+                                context, channelId)
 
 
-
-                   Intent inputIntent = new Intent(context, MainActivity.class);
-
-                   PendingIntent resultPendingIntent = PendingIntent.getActivity
-
-                           (
-
-                                   context,
-
-                                   101,
-
-                                   inputIntent,
-                                   PendingIntent.FLAG_ONE_SHOT
-                                   //PendingIntent.FLAG_UPDATE_CURRENT
-
-                           );
+                                .setContentText("Test");
 
 
-
-                   NotificationCompat.Action inputAction = new NotificationCompat.Action.Builder(
-
-                           android.R.drawable.ic_menu_edit, "Entry", resultPendingIntent)
-
-                           .addRemoteInput(remoteInput)
-
-                           .setAllowGeneratedReplies(true)
-
-                           .build();
-
-
-
-                   NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
-
-                           .setPriority(NotificationManager.IMPORTANCE_LOW)
-
-                           .setContentTitle("Journal Entry")
-
-                           .setContentText("Create a journal entry")
-
-                           .setSmallIcon(R.drawable.ic_launcher_foreground)
-
-                           .addAction(inputAction)
-
-                           .setColor(getResources().getColor(R.color.colorAccent));
-
-
-
-                   notificationManager.notify(1
-                           , builder.build());
-
-
-
+                        notificationManager.notify();
+                    }
 
                 }
             }
         } );
 
+        findViewById( R.id.button_pending_intent ).setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String channelId = "CHANNEL_ID";
+                Button bt=findViewById( R.id.button_pending_intent );
+                bt.setText( "pressed" );
+                NotificationManager notificationManager = (NotificationManager) getSystemService( Context.NOTIFICATION_SERVICE );
+
+                android.support.v4.app.RemoteInput remoteInput = new RemoteInput.Builder( "NEW_ENTRY_ACTION" )
+
+                        .setLabel( "Enter your entry text" )
+
+                        .build();
+
+
+                Intent inputIntent = new Intent( context, MainActivity.class );
+
+                PendingIntent resultPendingIntent = PendingIntent.getActivity
+
+                        (
+
+                                context,
+
+                                101,
+
+                                inputIntent,
+                                PendingIntent.FLAG_ONE_SHOT
+                                //PendingIntent.FLAG_UPDATE_CURRENT
+
+                        );
+
+
+                NotificationCompat.Action inputAction = new NotificationCompat.Action.Builder(
+
+                        android.R.drawable.ic_menu_edit, "Entry", resultPendingIntent )
+
+                        .addRemoteInput( remoteInput )
+
+                        .setAllowGeneratedReplies( true )
+
+                        .build();
+
+
+                NotificationCompat.Builder builder = new NotificationCompat.Builder( context, channelId )
+
+                        .setPriority( NotificationManager.IMPORTANCE_LOW )
+
+                        .setContentTitle( "Journal Entry" )
+
+                        .setContentText( "Create a journal entry" )
+
+                        .setSmallIcon( R.drawable.ic_launcher_foreground )
+
+                        .addAction( inputAction )
+
+                        .setColor( getResources().getColor( R.color.colorAccent ) );
+
+
+                notificationManager.notify( 1
+                        , builder.build() );
+
+
+            }
+
+
+        } );
     }
+
 }
