@@ -36,28 +36,21 @@ public class MainActivity extends AppCompatActivity {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     NotificationManager notificationManager = (NotificationManager) getSystemService( Context.NOTIFICATION_SERVICE );
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+                     String description = "Notification for journal entry";
 
 
-                        String description = "Notification for journal entry";
+                     NotificationChannel notificationChannel = new NotificationChannel( channelId, name, importance );
 
+                      notificationChannel.setDescription( description );
 
-                        NotificationChannel notificationChannel = new NotificationChannel( channelId, name, importance );
+                      notificationManager.createNotificationChannel( notificationChannel );
 
-                        notificationChannel.setDescription( description );
+                      NotificationCompat.Builder notification = new NotificationCompat.Builder(
 
-                        notificationManager.createNotificationChannel( notificationChannel );
+                                context, channelId).setPriority( 4 ).setContentTitle( "test" ).setContentText( "test2" ).setColor( 3 ).setSmallIcon( android.R.drawable.ic_btn_speak_now ).setDefaults( 1 );
 
-                        NotificationCompat.Builder sucessNotification = new NotificationCompat.Builder(
-
-                                context, channelId)
-
-
-                                .setContentText("Test");
-
-
-                        notificationManager.notify();
-                    }
+                     notificationManager.notify(1,notification.build());
 
                 }
             }
