@@ -19,13 +19,7 @@ class FullscreenActivity : AppCompatActivity() {
         // Note that some of these constants are new as of API 16 (Jelly Bean)
         // and API 19 (KitKat). It is safe to use them, as they are inlined
         // at compile-time and do nothing on earlier devices.
-        content_view.systemUiVisibility =
-            View.SYSTEM_UI_FLAG_LOW_PROFILE or
-                    View.SYSTEM_UI_FLAG_FULLSCREEN or
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
-                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
-                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+
     }
     private val mShowPart2Runnable = Runnable {
         // Delayed display of UI elements
@@ -54,20 +48,16 @@ class FullscreenActivity : AppCompatActivity() {
 
         // TODO ! get the intent and pull a string extra from it
         val intent = Intent(this, FullscreenActivity::class.java)
-        val mContentView = intent.getStringExtra("Text for Notification Clicks")
+        var mContentView = intent.getStringExtra("Text for Notification Clicks")
+        content_view.setText("$mContentView")
         startActivity(intent)
-
-        content_view.setText(mContentView)
-
-
-
 
 
 
         mVisible = true
 
         // Set up the user interaction to manually show or hide the system UI.
-        content_view.setOnClickListener { toggle() }
+
 
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
@@ -105,10 +95,7 @@ class FullscreenActivity : AppCompatActivity() {
 
     private fun show() {
         // Show the system bar
-        content_view.systemUiVisibility =
-            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
-                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-        mVisible = true
+
 
         // Schedule a runnable to display UI elements after a delay
         mHideHandler.removeCallbacks(mHidePart2Runnable)

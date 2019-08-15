@@ -25,7 +25,7 @@ object BasicNotification{
             //TODO 3
             //triggering the notification
             //regular intent to pass intent to next screen
-            val contentIntent = Intent(context, MainActivity::class.java)
+            val contentIntent = Intent(context, FullscreenActivity::class.java)
             // convert regular intent to pending intent
 
             // in () <- created from, code ,intent that's wrap and FLAG
