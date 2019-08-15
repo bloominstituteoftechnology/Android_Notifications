@@ -1,15 +1,21 @@
 package com.example.notification_assignment
 
+import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.app.NotificationCompat
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
 
+   companion object {
+       const val NOTIF_KEY = 5
+   }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -25,12 +31,23 @@ class MainActivity : AppCompatActivity() {
             {
 
                 val channelId = "channel_ID"
-                val name = "simple notification"
+                val name = "super basic notification"
                 val importance = NotificationManager.IMPORTANCE_HIGH
                 val description = "Hello this is the discription"
                 val channel = NotificationChannel(channelId,name,importance)
                 channel.description = description
-                
+
+                notificationManager.createNotificationChannel(channel)
+
+                val notif_builder = NotificationCompat.Builder(this,channelId)
+                    .setPriority(NotificationManager.IMPORTANCE_HIGH)
+                    .setContentTitle("Basic notification!")
+                    .setContentText("Sample Text")
+                    .setSmallIcon(android.R.drawable.btn_star_big_on)
+                    .setColor(getColor(R.color.colorPrimary))
+                    .setDefaults(Activity.DEFAULT_KEYS_DIALER)
+                    notificationManager.notify(NOTIF_KEY,notif_builder.build())
+
             }
 
 
