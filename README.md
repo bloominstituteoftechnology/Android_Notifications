@@ -51,4 +51,4 @@ This project will have you create a page of buttons to display different types o
 3. Build and test your app to make sure it launches the new activity and displays your string.
 
 ## Challenge
-In your testing, find bugs and small feature improvements that can improve the polish of your app.
+In your testing, find bugs and small feature improvements that can improve the polish of your app..
