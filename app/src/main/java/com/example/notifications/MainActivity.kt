@@ -19,6 +19,6 @@ class MainActivity : AppCompatActivity() {
             val notification = Notification(this, MainActivity::class.java)
             notification.notify(NOTIFICATION_ID, getString(R.string.notification_title_main),
                 getString(R.string.notification_content_main))
-        }   
+        }
     }
 }

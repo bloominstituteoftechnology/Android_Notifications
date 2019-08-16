@@ -32,8 +32,8 @@ class Notification<T>(private val context: Context, private val actingClass : Cl
                 .setSmallIcon(icon)
                 .setContentTitle(contentTitle)
                 .setContentText(contentText)
+                .setContentIntent(pendingContentIntent)
                 .setPriority(notificationPriority)
-                .setDeleteIntent(pendingContentIntent)
                 .setAutoCancel(toAutoCancel)
 
             notificationManager.notify(classID, notificationBuilder.build())
