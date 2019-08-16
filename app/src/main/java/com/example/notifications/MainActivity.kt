@@ -25,11 +25,15 @@ class MainActivity : AppCompatActivity() {
 
             val intent = Intent(this, FullscreenActivity::class.java)
             intent.putExtra(MESSAGE_ID, "HELLO WORLD!")
-            val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
+            val pendingContentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
+
+            intent.putExtra(OTHER_MESSAGE_ID, "WHY")
+            val pendingActionIntent = PendingIntent.getActivity(this, 1, intent, PendingIntent.FLAG_ONE_SHOT)
 
             val notification = Notification(this, MainActivity::class.java)
             notification.notificationPriority = NotificationCompat.PRIORITY_LOW
-            notification.setPendingContentIntent(pendingIntent)
+            notification.setPendingContentIntent(pendingContentIntent)
+            notification.addActionIntent(R.drawable.ic_launcher_background, "second intent", pendingActionIntent)
 
             notification.notify(NOTIFICATION_ID, getString(R.string.notification_title_main),
                 getString(R.string.notification_content_main))
