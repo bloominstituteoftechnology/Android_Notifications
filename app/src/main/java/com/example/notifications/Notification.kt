@@ -53,4 +53,8 @@ class Notification<T>(private val context: Context, private val actingClass : Cl
     fun setPendingContentIntent(pendingContentIntent: PendingIntent){
         notificationBuilder.setContentIntent(pendingContentIntent)
     }
+
+    fun addActionIntent(icon: Int, content : String, pendingActionIntent : PendingIntent){
+        notificationBuilder.addAction(icon, content, pendingActionIntent)
+    }
 }
