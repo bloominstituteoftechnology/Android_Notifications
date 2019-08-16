@@ -16,13 +16,9 @@ class Notification<T>(private val context: Context, private val actingClass : Cl
     var notificationPriority =  NotificationCompat.PRIORITY_DEFAULT
     var toAutoCancel = true
 
-    fun notify(classID : Int = -1,  contentTitle : String = "", contentText : String = ""){
+    fun notify(classID : Int = -1,  contentTitle : String = "", contentText : String = "", contentIntent : PendingIntent){
 
         if(classID != -1) { //needs a class ID to call a notification
-
-            val contentIntent = Intent(context, actingClass)
-            val pendingContentIntent = PendingIntent.getActivity(context, 0, contentIntent,
-                PendingIntent.FLAG_ONE_SHOT)
 
             val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
@@ -32,7 +28,7 @@ class Notification<T>(private val context: Context, private val actingClass : Cl
                 .setSmallIcon(icon)
                 .setContentTitle(contentTitle)
                 .setContentText(contentText)
-                .setContentIntent(pendingContentIntent)
+                .setContentIntent(contentIntent)
                 .setPriority(notificationPriority)
                 .setAutoCancel(toAutoCancel)
 

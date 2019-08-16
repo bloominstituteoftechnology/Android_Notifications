@@ -60,7 +60,8 @@ class FullscreenActivity : AppCompatActivity() {
         // while interacting with the UI.
 
         if(intent != null){
-
+            val s = intent.getStringExtra(MainActivity.MESSAGE_ID)
+            fullscreen_content.text = s
         }
     }
 
