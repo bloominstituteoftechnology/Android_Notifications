@@ -12,11 +12,14 @@ class Notification<T>(private val context: Context, private val actingClass : Cl
                       private val icon : Int = R.drawable.ic_launcher_foreground){
 
     private val channelId = "{$context.packageName}.simplechannel"
+
+    private val notificationBuilder = NotificationCompat.Builder(context, channelId)
     var channelImportance = NotificationManager.IMPORTANCE_DEFAULT
     var notificationPriority =  NotificationCompat.PRIORITY_DEFAULT
     var toAutoCancel = true
+    //var pendingContentIntent : PendingIntent = PendingIntent.getActivity(context, 0, Intent(), PendingIntent.FLAG_ONE_SHOT)
 
-    fun notify(classID : Int = -1,  contentTitle : String = "", contentText : String = "", contentIntent : PendingIntent){
+    fun notify(classID : Int = -1,  contentTitle : String = "", contentText : String = ""){
 
         if(classID != -1) { //needs a class ID to call a notification
 
@@ -24,11 +27,9 @@ class Notification<T>(private val context: Context, private val actingClass : Cl
 
             createNotificationChannel(notificationManager)
 
-            val notificationBuilder = NotificationCompat.Builder(context, channelId)
-                .setSmallIcon(icon)
+            notificationBuilder.setSmallIcon(icon)
                 .setContentTitle(contentTitle)
                 .setContentText(contentText)
-                .setContentIntent(contentIntent)
                 .setPriority(notificationPriority)
                 .setAutoCancel(toAutoCancel)
 
@@ -47,5 +48,9 @@ class Notification<T>(private val context: Context, private val actingClass : Cl
             }
             notificationManager.createNotificationChannel(channel)
         }
+    }
+
+    fun setPendingContentIntent(pendingContentIntent: PendingIntent){
+        notificationBuilder.setContentIntent(pendingContentIntent)
     }
 }

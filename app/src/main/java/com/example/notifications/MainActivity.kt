@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
     companion object{
         const val NOTIFICATION_ID = 87
         const val MESSAGE_ID = "46"
+        const val OTHER_MESSAGE_ID = "84"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,8 +29,10 @@ class MainActivity : AppCompatActivity() {
 
             val notification = Notification(this, MainActivity::class.java)
             notification.notificationPriority = NotificationCompat.PRIORITY_LOW
+            notification.setPendingContentIntent(pendingIntent)
+
             notification.notify(NOTIFICATION_ID, getString(R.string.notification_title_main),
-                getString(R.string.notification_content_main), pendingIntent)
+                getString(R.string.notification_content_main))
         }
     }
 }
